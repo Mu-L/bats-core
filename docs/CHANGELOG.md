@@ -11,6 +11,17 @@ The format is based on [Keep a Changelog][kac] and this project adheres to
 
 ## [Unreleased]
 
+### Added 
+
+* `bats::on_failure` hook that gets called when a test or `setup*` function fails (#1031)
+
+### Fixed
+
+* increase compatibility with Solaris (#1043)
+* fix `noclobber` breaking `bats-gather-tests` (#1042)
+
+## [1.11.1] - 2024-11-29
+
 ### Added
 
 * make Dockerfile compatible with `#!/bin/bash` files (#967)

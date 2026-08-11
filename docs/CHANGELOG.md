@@ -14,6 +14,7 @@ The format is based on [Keep a Changelog][kac] and this project adheres to
 ### Fixed
 
 * pretty formatter was not the default on interactive shells anymore (#1220)
+* `bats_encode_test_name()` used the locale-dependent `[[:alnum:]]` character class, causing test names with non-ASCII characters to be silently skipped under some locales (#1236)
 
 ### Documentation
 

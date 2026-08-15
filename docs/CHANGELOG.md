@@ -18,6 +18,7 @@ The format is based on [Keep a Changelog][kac] and this project adheres to
 ### Fixed
 
 * pretty formatter was not the default on interactive shells anymore (#1220)
+* `--jobs` now aborts when GNU parallel is unavailable instead of failing later (#1237, #1238)
 
 ### Documentation
 

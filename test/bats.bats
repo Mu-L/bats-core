@@ -47,7 +47,7 @@ setup() {
   [ "${lines[0]}" = "1..0" ]
   [ "${#lines[@]}" -eq 1 ]
 
-  [ "${stderr_lines[0]}" = "ERROR: Found no tests. (Try \`--allow-empty-suite\` or \`BATS_ALLOW_EMPTY_SUITE=1\`?)" ]
+  [ "${stderr_lines[0]}" = "ERROR: Found no tests. Use \`--allow-empty-suite\` or \`BATS_ALLOW_EMPTY_SUITE=1\` to suppress this error." ]
   [ "${#stderr_lines[@]}" -eq 1 ]
 }
 
@@ -1719,7 +1719,7 @@ END_OF_ERR_MSG
   reentrant_run --separate-stderr -1 env BATS_ALLOW_EMPTY_SUITE= bats "$FIXTURE_ROOT/empty.bats"
 
   [ "${lines[0]}" = "1..0" ]
-  [ "${stderr_lines[0]}" = "ERROR: Found no tests. (Try \`--allow-empty-suite\` or \`BATS_ALLOW_EMPTY_SUITE=1\`?)" ]
+  [ "${stderr_lines[0]}" = "ERROR: Found no tests. Use \`--allow-empty-suite\` or \`BATS_ALLOW_EMPTY_SUITE=1\` to suppress this error." ]
 }
 
 @test "BATS_ALLOW_EMPTY_SUITE does not fail when there are tests" {

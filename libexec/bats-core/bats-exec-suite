@@ -197,7 +197,7 @@ printf '1..%d\n' "${test_count}"
 if [[ "${test_count}" == 0 ]]; then
   bats_exec_suite_status=$BATS_EMPTY_SUITE_STATUS
   if (( bats_exec_suite_status != 0)); then
-    printf "ERROR: Found no tests. (Try \`--allow-empty-suite\` or \`BATS_ALLOW_EMPTY_SUITE=1\`?)" >&2
+    printf "ERROR: Found no tests. Use \`--allow-empty-suite\` or \`BATS_ALLOW_EMPTY_SUITE=1\` to suppress this error." >&2
   fi
   bats_exit_suite
 fi

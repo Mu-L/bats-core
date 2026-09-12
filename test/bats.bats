@@ -47,7 +47,7 @@ setup() {
   [ "${lines[0]}" = "1..0" ]
   [ "${#lines[@]}" -eq 1 ]
 
-  [ "${stderr_lines[0]}" = "ERROR: Found no tests. (Try \`--allow-empty-suite\`?)" ]
+  [ "${stderr_lines[0]}" = "ERROR: Found no tests. Use \`--allow-empty-suite\` or \`BATS_ALLOW_EMPTY_SUITE=1\` to suppress this error." ]
   [ "${#stderr_lines[@]}" -eq 1 ]
 }
 
@@ -1712,6 +1712,37 @@ END_OF_ERR_MSG
 @test "--allow-empty-suite fails when there are tests" {
   bats_require_minimum_version 1.5.0
   reentrant_run -0 bats --allow-empty-suite "$FIXTURE_ROOT/passing.bats"
+}
+
+@test "--allow-empty-suite exits successfully on empty suite" {
+  bats_require_minimum_version 1.5.0
+  reentrant_run --separate-stderr -0 bats --allow-empty-suite "$FIXTURE_ROOT/empty.bats"
+
+  [ "${lines[0]}" = "1..0" ]
+  [ "${#lines[@]}" -eq 1 ]
+  [ "${#stderr_lines[@]}" -eq 0 ]
+}
+
+@test "BATS_ALLOW_EMPTY_SUITE exits successfully on empty suite" {
+  bats_require_minimum_version 1.5.0
+  reentrant_run --separate-stderr -0 env BATS_ALLOW_EMPTY_SUITE=1 bats "$FIXTURE_ROOT/empty.bats"
+
+  [ "${lines[0]}" = "1..0" ]
+  [ "${#lines[@]}" -eq 1 ]
+  [ "${#stderr_lines[@]}" -eq 0 ]
+}
+
+@test "empty BATS_ALLOW_EMPTY_SUITE does not allow an empty suite" {
+  bats_require_minimum_version 1.5.0
+  reentrant_run --separate-stderr -1 env BATS_ALLOW_EMPTY_SUITE= bats "$FIXTURE_ROOT/empty.bats"
+
+  [ "${lines[0]}" = "1..0" ]
+  [ "${stderr_lines[0]}" = "ERROR: Found no tests. Use \`--allow-empty-suite\` or \`BATS_ALLOW_EMPTY_SUITE=1\` to suppress this error." ]
+}
+
+@test "BATS_ALLOW_EMPTY_SUITE does not fail when there are tests" {
+  bats_require_minimum_version 1.5.0
+  reentrant_run -0 env BATS_ALLOW_EMPTY_SUITE=1 bats "$FIXTURE_ROOT/passing.bats"
 }
 
 @test "empty testfile path is an error" {
